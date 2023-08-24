@@ -95,7 +95,7 @@ def main():
                 number_of_players = 1
                 while True:
                     human_player = input("What color do you want to play (w or b)?\n")
-                    if human_player is "w" or human_player is "b":
+                    if human_player == "w" or human_player == "b":
                         break
                     else:
                         print("Enter w or b.\n")
@@ -121,7 +121,7 @@ def main():
 
     ai = ai_engine.chess_ai()
     game_state = chess_engine.game_state()
-    if human_player is 'b':
+    if human_player == 'b':
         ai_move = ai.minimax_black(game_state, 3, -100000, 100000, True, Player.PLAYER_1)
         game_state.move_piece(ai_move[0], ai_move[1], True)
 
@@ -153,10 +153,10 @@ def main():
                             player_clicks = []
                             valid_moves = []
 
-                            if human_player is 'w':
+                            if human_player == 'w':
                                 ai_move = ai.minimax_white(game_state, 3, -100000, 100000, True, Player.PLAYER_2)
                                 game_state.move_piece(ai_move[0], ai_move[1], True)
-                            elif human_player is 'b':
+                            elif human_player == 'b':
                                 ai_move = ai.minimax_black(game_state, 3, -100000, 100000, True, Player.PLAYER_1)
                                 game_state.move_piece(ai_move[0], ai_move[1], True)
                     else:
