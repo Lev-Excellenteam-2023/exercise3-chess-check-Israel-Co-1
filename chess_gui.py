@@ -19,32 +19,33 @@ MAX_FPS = 15  # FPS for animations
 IMAGES = {}  # images for the chess pieces
 colors = [py.Color("white"), py.Color("gray")]
 
+
 # TODO: AI black has been worked on. Mirror progress for other two modes
 def load_images():
-    '''
+    """
     Load images for the chess pieces
-    '''
+    """
     for p in Player.PIECES:
         IMAGES[p] = py.transform.scale(py.image.load("images/" + p + ".png"), (SQ_SIZE, SQ_SIZE))
 
 
 def draw_game_state(screen, game_state, valid_moves, square_selected):
-    ''' Draw the complete chess board with pieces
+    """ Draw the complete chess board with pieces
 
     Keyword arguments:
         :param screen       -- the pygame screen
         :param game_state   -- the state of the current chess game
-    '''
+    """
     draw_squares(screen)
     highlight_square(screen, game_state, valid_moves, square_selected)
     draw_pieces(screen, game_state)
 
 
 def draw_squares(screen):
-    ''' Draw the chess board with the alternating two colors
+    """ Draw the chess board with the alternating two colors
 
     :param screen:          -- the pygame screen
-    '''
+    """
     for r in range(DIMENSION):
         for c in range(DIMENSION):
             color = colors[(r + c) % 2]
@@ -52,11 +53,11 @@ def draw_squares(screen):
 
 
 def draw_pieces(screen, game_state):
-    ''' Draw the chess pieces onto the board
+    """ Draw the chess pieces onto the board
 
     :param screen:          -- the pygame screen
     :param game_state:      -- the current state of the chess game
-    '''
+    """
     for r in range(DIMENSION):
         for c in range(DIMENSION):
             piece = game_state.get_piece(r, c)
@@ -149,6 +150,8 @@ def main():
                         else:
                             game_state.move_piece((player_clicks[0][0], player_clicks[0][1]),
                                                   (player_clicks[1][0], player_clicks[1][1]), False)
+                            draw_game_state(screen, game_state, valid_moves, square_selected)
+                            py.display.update()
                             square_selected = ()
                             player_clicks = []
                             valid_moves = []
@@ -178,15 +181,21 @@ def main():
         draw_game_state(screen, game_state, valid_moves, square_selected)
 
         endgame = game_state.checkmate_stalemate_checker()
-        if endgame == 0:
-            game_over = True
-            draw_text(screen, "Black wins.")
-        elif endgame == 1:
-            game_over = True
-            draw_text(screen, "White wins.")
-        elif endgame == 2:
-            game_over = True
-            draw_text(screen, "Stalemate.")
+        if endgame in range(3):
+            if endgame == 0:
+                draw_text(screen, "Black wins.")
+            elif endgame == 1:
+                game_over = True
+                draw_text(screen, "White wins.")
+            elif endgame == 2:
+                game_over = True
+                draw_text(screen, "Stalemate.")
+                game_over = True
+
+            running = False
+
+            py.display.update()
+            py.time.wait(10000)
 
         clock.tick(MAX_FPS)
         py.display.flip()
