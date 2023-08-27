@@ -89,7 +89,8 @@ class Rook(Piece):
                 self._left += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number(), self.get_col_number() - self._left) and \
-                    not game_state.get_piece(self.get_row_number(), self.get_col_number() - self._left).is_player(self.get_player()):
+                    not game_state.get_piece(self.get_row_number(), self.get_col_number() - self._left).is_player(
+                        self.get_player()):
                 _piece_takes.append((self.get_row_number(), self.get_col_number() - self._left))
                 self._breaking_point = True
             else:
@@ -104,7 +105,8 @@ class Rook(Piece):
                 self._right += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number(), self.get_col_number() + self._right) and \
-                    not game_state.get_piece(self.get_row_number(), self.get_col_number() + self._right).is_player(self.get_player()):
+                    not game_state.get_piece(self.get_row_number(), self.get_col_number() + self._right).is_player(
+                        self.get_player()):
                 _piece_takes.append((self.get_row_number(), self.get_col_number() + self._right))
                 self._breaking_point = True
             else:
@@ -119,7 +121,8 @@ class Rook(Piece):
                 self._down += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number() + self._down, self.get_col_number()) and \
-                    not game_state.get_piece(self.get_row_number() + self._down, self.get_col_number()).is_player(self.get_player()):
+                    not game_state.get_piece(self.get_row_number() + self._down, self.get_col_number()).is_player(
+                        self.get_player()):
                 _piece_takes.append((self.get_row_number() + self._down, self.get_col_number()))
                 self._breaking_point = True
             else:
@@ -134,7 +137,8 @@ class Rook(Piece):
                 self._up += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number() - self._up, self.get_col_number()) and \
-                    not game_state.get_piece(self.get_row_number() - self._up, self.get_col_number()).is_player(self.get_player()):
+                    not game_state.get_piece(self.get_row_number() - self._up, self.get_col_number()).is_player(
+                        self.get_player()):
                 _piece_takes.append((self.get_row_number() - self._up, self.get_col_number()))
                 self._breaking_point = True
             else:
@@ -149,7 +153,7 @@ class Knight(Piece):
         row_change = [-2, -2, -1, -1, +1, +1, +2, +2]
         col_change = [-1, +1, -2, +2, -2, +2, +1, -1]
 
-        for i in range(0, 8):
+        for i in range(8):
             new_row = self.get_row_number() + row_change[i]
             new_col = self.get_col_number() + col_change[i]
             evaluating_square = game_state.get_piece(new_row, new_col)
@@ -163,7 +167,7 @@ class Knight(Piece):
         row_change = [-2, -2, -1, -1, +1, +1, +2, +2]
         col_change = [-1, +1, -2, +2, -2, +2, +1, -1]
 
-        for i in range(0, 6):
+        for i in range(0, 8):
             new_row = self.get_row_number() + row_change[i]
             new_col = self.get_col_number() + col_change[i]
             evaluating_square = game_state.get_piece(new_row, new_col)
@@ -197,6 +201,8 @@ class Knight(Piece):
         #             _moves.append((new_row, new_col))
         # return _moves
         return self.get_valid_peaceful_moves(game_state) + self.get_valid_piece_takes(game_state)
+
+
 # Bishop
 class Bishop(Piece):
     def __init__(self, name, row_number, col_number, player):
@@ -222,13 +228,15 @@ class Bishop(Piece):
         self._right = 1
         while self.get_col_number() - self._left >= 0 and self.get_row_number() - self._up >= 0 and not self._breaking_point:
             # when the square is empty
-            if game_state.get_piece(self.get_row_number() - self._up, self.get_col_number() - self._left) is Player.EMPTY:
+            if game_state.get_piece(self.get_row_number() - self._up,
+                                    self.get_col_number() - self._left) is Player.EMPTY:
                 _peaceful_moves.append((self.get_row_number() - self._up, self.get_col_number() - self._left))
                 self._left += 1
                 self._up += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number() - self._up, self.get_col_number() - self._left) and \
-                    not game_state.get_piece(self.get_row_number() - self._up, self.get_col_number() - self._left).is_player(self.get_player()):
+                    not game_state.get_piece(self.get_row_number() - self._up,
+                                             self.get_col_number() - self._left).is_player(self.get_player()):
                 _piece_takes.append((self.get_row_number() - self._up, self.get_col_number() - self._left))
                 self._breaking_point = True
             else:
@@ -242,13 +250,15 @@ class Bishop(Piece):
         self._right = 1
         while self.get_col_number() + self._right < 8 and self.get_row_number() - self._up >= 0 and not self._breaking_point:
             # when the square is empty
-            if game_state.get_piece(self.get_row_number() - self._up, self.get_col_number() + self._right) is Player.EMPTY:
+            if game_state.get_piece(self.get_row_number() - self._up,
+                                    self.get_col_number() + self._right) is Player.EMPTY:
                 _peaceful_moves.append((self.get_row_number() - self._up, self.get_col_number() + self._right))
                 self._right += 1
                 self._up += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number() - self._up, self.get_col_number() + self._right) and \
-                    not game_state.get_piece(self.get_row_number() - self._up, self.get_col_number() + self._right).is_player(self.get_player()):
+                    not game_state.get_piece(self.get_row_number() - self._up,
+                                             self.get_col_number() + self._right).is_player(self.get_player()):
                 _piece_takes.append((self.get_row_number() - self._up, self.get_col_number() + self._right))
                 self._breaking_point = True
             else:
@@ -262,13 +272,15 @@ class Bishop(Piece):
         self._right = 1
         while self.get_col_number() - self._left >= 0 and self.get_row_number() + self._down < 8 and not self._breaking_point:
             # when the square is empty
-            if game_state.get_piece(self.get_row_number() + self._down, self.get_col_number() - self._left) is Player.EMPTY:
+            if game_state.get_piece(self.get_row_number() + self._down,
+                                    self.get_col_number() - self._left) is Player.EMPTY:
                 _peaceful_moves.append((self.get_row_number() + self._down, self.get_col_number() - self._left))
                 self._down += 1
                 self._left += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number() + self._down, self.get_col_number() - self._left) and \
-                    not game_state.get_piece(self.get_row_number() + self._down, self.get_col_number() - self._left).is_player(self.get_player()):
+                    not game_state.get_piece(self.get_row_number() + self._down,
+                                             self.get_col_number() - self._left).is_player(self.get_player()):
                 _piece_takes.append((self.get_row_number() + self._down, self.get_col_number() - self._left))
                 self._breaking_point = True
             else:
@@ -282,20 +294,21 @@ class Bishop(Piece):
         self._right = 1
         while self.get_col_number() + self._right < 8 and self.get_row_number() + self._down < 8 and not self._breaking_point:
             # when the square is empty
-            if game_state.get_piece(self.get_row_number() + self._down, self.get_col_number() + self._right) is Player.EMPTY:
+            if game_state.get_piece(self.get_row_number() + self._down,
+                                    self.get_col_number() + self._right) is Player.EMPTY:
                 _peaceful_moves.append((self.get_row_number() + self._down, self.get_col_number() + self._right))
                 self._down += 1
                 self._right += 1
             # when the square contains an opposing piece
             elif game_state.is_valid_piece(self.get_row_number() + self._down, self.get_col_number() + self._right) and \
-                    not game_state.get_piece(self.get_row_number() + self._down, self.get_col_number() + self._right).is_player(
+                    not game_state.get_piece(self.get_row_number() + self._down,
+                                             self.get_col_number() + self._right).is_player(
                         self.get_player()):
                 _piece_takes.append((self.get_row_number() + self._down, self.get_col_number() + self._right))
                 self._breaking_point = True
             else:
                 self._breaking_point = True
         return (_peaceful_moves, _piece_takes)
-
 
 
 # Pawn
@@ -305,11 +318,13 @@ class Pawn(Piece):
         if self.is_player(Player.PLAYER_1):
             # when the square to the bottom left of the starting_square has a black piece
             if game_state.is_valid_piece(self.get_row_number() + 1, self.get_col_number() - 1) and \
-                    game_state.get_piece(self.get_row_number() + 1, self.get_col_number() - 1).is_player(Player.PLAYER_2):
+                    game_state.get_piece(self.get_row_number() + 1, self.get_col_number() - 1).is_player(
+                        Player.PLAYER_2):
                 _moves.append((self.get_row_number() + 1, self.get_col_number() - 1))
             # when the square to the bottom right of the starting_square has a black piece
             if game_state.is_valid_piece(self.get_row_number() + 1, self.get_col_number() + 1) and \
-                    game_state.get_piece(self.get_row_number() + 1, self.get_col_number() + 1).is_player(Player.PLAYER_2):
+                    game_state.get_piece(self.get_row_number() + 1, self.get_col_number() + 1).is_player(
+                        Player.PLAYER_2):
                 _moves.append((self.get_row_number() + 1, self.get_col_number() + 1))
             if game_state.can_en_passant(self.get_row_number(), self.get_col_number()):
                 _moves.append((self.get_row_number() + 1, game_state.previous_piece_en_passant()[1]))
@@ -317,11 +332,13 @@ class Pawn(Piece):
         elif self.is_player(Player.PLAYER_2):
             # when the square to the top left of the starting_square has a white piece
             if game_state.is_valid_piece(self.get_row_number() - 1, self.get_col_number() - 1) and \
-                    game_state.get_piece(self.get_row_number() - 1, self.get_col_number() - 1).is_player(Player.PLAYER_1):
+                    game_state.get_piece(self.get_row_number() - 1, self.get_col_number() - 1).is_player(
+                        Player.PLAYER_1):
                 _moves.append((self.get_row_number() - 1, self.get_col_number() - 1))
             # when the square to the top right of the starting_square has a white piece
             if game_state.is_valid_piece(self.get_row_number() - 1, self.get_col_number() + 1) and \
-                    game_state.get_piece(self.get_row_number() - 1, self.get_col_number() + 1).is_player(Player.PLAYER_1):
+                    game_state.get_piece(self.get_row_number() - 1, self.get_col_number() + 1).is_player(
+                        Player.PLAYER_1):
                 _moves.append((self.get_row_number() - 1, self.get_col_number() + 1))
             if game_state.can_en_passant(self.get_row_number(), self.get_col_number()):
                 _moves.append((self.get_row_number() - 1, game_state.previous_piece_en_passant()[1]))
@@ -409,16 +426,26 @@ class Pawn(Piece):
 # Queen
 class Queen(Rook, Bishop):
     def get_valid_peaceful_moves(self, game_state):
-        return (Rook.get_valid_peaceful_moves(Rook(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state) +
-                Bishop.get_valid_peaceful_moves(Bishop(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state))
+        return (Rook.get_valid_peaceful_moves(
+            Rook(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state) +
+                Bishop.get_valid_peaceful_moves(
+                    Bishop(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()),
+                    game_state))
 
     def get_valid_piece_takes(self, game_state):
-        return (Rook.get_valid_piece_takes( Rook(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state) +
-                Bishop.get_valid_piece_takes(Bishop(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state))
+        return (Rook.get_valid_piece_takes(
+            Rook(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state) +
+                Bishop.get_valid_piece_takes(
+                    Bishop(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()),
+                    game_state))
 
     def get_valid_piece_moves(self, game_state):
-        return (Rook.get_valid_piece_moves(Rook(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state) +
-                Bishop.get_valid_piece_moves(Bishop(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state))
+        return (Rook.get_valid_piece_moves(
+            Rook(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()), game_state) +
+                Bishop.get_valid_piece_moves(
+                    Bishop(self.get_name(), self.get_row_number(), self.get_col_number(), self.get_player()),
+                    game_state))
+
 
 # King
 class King(Piece):
