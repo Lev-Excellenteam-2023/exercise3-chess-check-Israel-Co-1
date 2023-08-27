@@ -20,6 +20,8 @@ def get_game_state_mock(player: Player, occupied_points: List[Tuple[int, int]]):
 
     game_state_mock = Mock()
     game_state_mock.get_piece.side_effect = get_piece_mock
+    game_state_mock.is_valid_piece.return_value = False
+    game_state_mock.get_piece.return_value.get_player.return_value = player
     return game_state_mock
 
 
@@ -52,3 +54,16 @@ def test_get_valid_peaceful_moves_with_occupied_squares():
     knight = Knight('n', 3, 5, Player.PLAYER_1)
     game_state_mock = get_game_state_mock(Player.PLAYER_2, [(2, 3), (1, 4), (1, 6), (2, 7), (4, 7), (5, 6)])
     assert set(knight.get_valid_peaceful_moves(game_state_mock)) == {(5, 4), (4, 3)}
+
+
+def test_get_valid_piece_takes():
+    """
+    Tests the get_valid_piece_takes method of the Knight class in case of that the knight in the middle of the board
+    and there are some occupied squares
+    """
+    knight = Knight('n', 3, 5, Player.PLAYER_1)
+    game_state_mock = get_game_state_mock(Player.PLAYER_2, [(2, 3), (1, 4), (1, 6), (2, 7), (4, 7), (5, 6), (5, 4), (4, 3)])
+    # game_state_mock = get_game_state_mock(Player.PLAYER_2, [])
+    assert knight.get_valid_piece_takes(game_state_mock) == []
+
+
